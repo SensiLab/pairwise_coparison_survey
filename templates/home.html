@@ -1,0 +1,99 @@
+
+<!-- <!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        {% for post in posts %}
+        <h1>{{ post.title }}</h1>
+        <p>By {{ post.author }} on {{ post.date_posted }}</p>
+        <p> {{ post.content }}</p>
+        {% endfor %}
+    </body>
+
+</html> -->
+
+
+{% extends "layout.html" %}
+
+{% block title %}
+    SensiLab survey.
+{% endblock title %}
+
+{% block content %}
+<div class="container"> 
+    <div class="jumbotron py-3 my-3">
+        <p class="h5 text-justify font-weight-light">Thank you for participating in our aesthetic preference 
+            and image perception experiment. You will be asked to answer questions regarding 
+            pairs of images. There are no right or wrong answers, so please respond based on your own perception.
+            You can exit the survey at any time, but we encourage you to do as many comparisons as you can, 
+            as this will greatly help our research.
+            If you have any questions or require more information please follow this <a href=/explanatory_statement>link</a>.
+        </p>
+        <hr>
+        <p class="h5 text-justify font-weight-light">
+            Before you begin, we would appreciate it if you could tell us a little bit about yourself:
+        </p>
+
+        <form class="form-group" action="/start_survey" method="post" id="user">
+            <div class="row align-items-center">
+                <div class="col text-right">
+                    <label for="age" class="my-1 ">What is your age-range? </label>
+                </div>
+                <div class="col">
+                    <select class="form-control-xsm w-50" name="age" id="age" required>
+                        <option value=-1 disabled selected>--</option>
+                        <option value=0>15 or under</option>
+                        <option value=1>16 to 25</option>
+                        <option value=2>26 to 35</option>
+                        <option value=3>36 to 45</option>
+                        <option value=4>46 to 55</option>
+                        <option value=5>56 to 65</option>
+                        <option value=6>66 or over</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col text-right">
+                    <label for="gender" class="my-1">What is your gender? </label>
+                </div>
+                <div class="col">
+                    <select class="form-control-xsm w-50" name="gender" id="gender" required>
+                        <option value=-1 disabled selected>--</option>
+                        <option value=0>Female (including transgender women)</option>
+                        <option value=1>Male (including transgender men)</option>
+                        <option value=2>Non-binary</option>
+                        <option value=3>Gender-fluid</option>
+                        <option value=4>Other</option>
+                        <option value=5>Prefer not to say</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col text-right">
+                    <label for="creativity" class="my-1">How much experience do you have with visual art?</label>
+                </div>
+                <div class="col">
+                    <select class="form-control-xsm w-50" name="creativity" id="creativity" required>
+                        <option value=-1 disabled selected>--</option>
+                        <option value=0>None</option>
+                        <option value=1>A little</option>
+                        <option value=2>Moderate</option>
+                        <option value=3>A lot</option>
+                        <option value=4>Expert</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row align-items-center justify-content-center mt-3">
+                <input type="submit" id= "submitButton" class="btn btn-primary submit-button" value="Start Survey" disabled='disabled'/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- scripts -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+
+{% endblock content %}

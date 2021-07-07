@@ -1,0 +1,300 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    SensiLab Survey
+    
+{% endblock title %}
+
+{% block content %}
+<meta id='ages' data-ages="{{session['ages']}}">
+<meta id='genders' data-genders="{{session['genders']}}">
+<meta id='experience' data-experience="{{session['experience']}}">
+<div class="container">
+    <div class="jumbotron">
+        <!-- general stats -->
+        <div class="row">
+            <div class="col text-center">
+                <p class="h1">General Stats</p>
+            </div>
+        </div>
+        <div class="row" style="height: 180px;">
+            <!-- total respondents -->
+            <div class="col text-center">
+                <div class="rounded card h-100">
+                    <p class="h3">Total respondents</p>
+                    <p class="h1">{{ session['total_voters'] }}</p>
+                </div>
+            </div>
+            <!-- total responses -->
+            <div class="col text-center">
+                <div class="rounded card h-100">
+                    <p class="h3">Total responses</p>
+                    <p class="h1">{{ session['total_responses'] }}</p>
+                </div>
+            </div>
+            <!-- average time per response -->
+            <div class="col text-center">
+                <div class="rounded card h-100">
+                    <p class="h3">Avg response time</p>
+                    <p class="h1">{{ session['avg_response_time'] }} secs.</p>
+                </div>
+            </div>
+            <!-- top locations -->
+            <div class="col text-center">
+                <div class="rounded card h-100">
+                    <p class="h3">Top Locations</p>
+                    <!-- <div class="card-body">
+                        <h3 class="card-title">Top Locations</h3>
+                    </div> -->
+                    <table class="card-table table">
+                        <tbody>
+                            <tr>
+                                <td>{{ session['top_voter_loc'][0] }}</td>
+                                <td>{{ session['top_voter_num'][0] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ session['top_voter_loc'][1] }}</td>
+                                <td>{{ session['top_voter_num'][1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ session['top_voter_loc'][2] }}</td>
+                                <td>{{ session['top_voter_num'][2] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <p class="h3">{{ session['top_voter_loc'][1] }}</p>
+                    <p class="h3">{{ session['top_voter_loc'][2] }}</p> -->
+                </div>
+            </div>
+        </div>
+        <!-- DEMOGRAPHICS -->
+        <div class="row my-2">
+            <div class="col text-center">
+                <div class="rounded card">
+                    <p class="h5">Age-range</p>
+                    <canvas id="chart_age" class='mb-2'></canvas>
+                </div>
+            </div>    
+            <div class="col text-center">
+                <div class="rounded card">
+                    <p class="h5">Gender</p>
+                    <canvas id="chart_gender" class='mb-2'></canvas>
+                </div>
+            </div>    
+            <div class="col text-center">
+                <div class="rounded card">
+                    <p class="h5">Experience</p>
+                    <canvas id="chart_experience" class='mb-2'></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- DATASET INFO -->
+        <div class="row">
+            <div class="col text-center">
+                <p class="h1">Dataset Stats</p>
+            </div>
+        </div>
+        <div class="row my-2">
+            <!-- orgs dataset -->
+            <div class="col">
+                <div class="rounded card">
+                    <div class="card-body">
+                        <h5 class="card-title">3D Printable Orgs</h5>
+                    </div>
+                    <table class="card-table table">
+                        <tbody>
+                            <tr>
+                                <td>Responses:</td>
+                                <td>{{ session['responses_per_dataset'][0] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Rated Aesthetics:</td>
+                                <td>{{ session['db0_matched_aesthetics'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Rated complexity:</td>
+                                <td>{{ session['db0_matched_complexity'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Below RD_Th aes:</td>
+                                <td>{{ session['db0_belowRDThreshold_aesthetics'] }} %</td>
+                            </tr>
+                            <tr>
+                                <td>Below RD_Th comp:</td>
+                                <td>{{ session['db0_belowRDThreshold_complexity'] }} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <img src="static/imgs/{{session['db0_top_aes_img']}}" alt="" class="card-img-top">
+                    <div class="card-body">
+                        <p class="h5 card-text">Top aesthetics rating</p>
+                        <table class="card-table table">
+                            <tbody>
+                                <tr>
+                                    <td>Rating:</td>
+                                    <td>{{ session['db0_top_aes_rating'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rating Dev:</td>
+                                    <td>{{ session['db0_top_aes_rd'] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <img src="static/imgs/{{session['db0_top_comp_img']}}" alt="" class="card-img-bottom">
+                    <div class="card-body">
+                        <p class="h5 card-text">Top complexity rating</p>
+                        <table class="card-table table">
+                            <tbody>
+                                <tr>
+                                    <td>Rating:</td>
+                                    <td>{{ session['db0_top_comp_rating'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rating Dev:</td>
+                                    <td>{{ session['db0_top_comp_rd'] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- linedrawings dataset -->
+            <div class="col">
+                <div class="rounded card">
+                    <div class="card-body">
+                        <h5 class="card-title">Line Drawings</h5>
+                    </div>
+                    <table class="card-table table">
+                        <tbody>
+                            <tr>
+                                <td>Responses:</td>
+                                <td>{{ session['responses_per_dataset'][1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Rated Aesthetics:</td>
+                                <td>{{ session['db1_matched_aesthetics'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Rated complexity:</td>
+                                <td>{{ session['db1_matched_complexity'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Below RD_Th aes:</td>
+                                <td>{{ session['db1_belowRDThreshold_aesthetics'] }} %</td>
+                            </tr>
+                            <tr>
+                                <td>Below RD_Th comp:</td>
+                                <td>{{ session['db1_belowRDThreshold_complexity'] }} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <img src="static/imgs/{{session['db1_top_aes_img']}}" alt="" class="card-img-top">
+                    <div class="card-body">
+                        <p class="h5 card-text">Top aesthetics rating</p>
+                        <table class="card-table table">
+                            <tbody>
+                                <tr>
+                                    <td>Rating:</td>
+                                    <td>{{ session['db1_top_aes_rating'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rating Dev:</td>
+                                    <td>{{ session['db1_top_aes_rd'] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>                        
+                    </div>
+                    <img src="static/imgs/{{session['db1_top_comp_img']}}" alt="" class="card-img-bottom">
+                    <div class="card-body">
+                        <p class="h5 card-text">Top complexity rating</p>
+                        <table class="card-table table">
+                            <tbody>
+                                <tr>
+                                    <td>Rating:</td>
+                                    <td>{{ session['db1_top_comp_rating'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rating Dev:</td>
+                                    <td>{{ session['db1_top_comp_rd'] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Andy's dataset -->
+            <div class="col">
+                <div class="rounded card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cellular Shapes</h5>
+                    </div>
+                    <table class="card-table table">
+                        <tbody>
+                            <tr>
+                                <td>Responses:</td>
+                                <td>{{ session['responses_per_dataset'][2] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Rated Aesthetics:</td>
+                                <td>{{ session['db2_matched_aesthetics'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Rated complexity:</td>
+                                <td>{{ session['db2_matched_complexity'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Below RD_Th aes:</td>
+                                <td>{{ session['db2_belowRDThreshold_aesthetics'] }} %</td>
+                            </tr>
+                            <tr>
+                                <td>Below RD_Th comp:</td>
+                                <td>{{ session['db2_belowRDThreshold_complexity'] }} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <img src="static/imgs/{{session['db2_top_aes_img']}}" alt="" class="card-img-top">
+                    <div class="card-body">
+                        <p class="h5 card-text">Top aesthetics rating</p>
+                        <table class="card-table table">
+                            <tbody>
+                                <tr>
+                                    <td>Rating:</td>
+                                    <td>{{ session['db2_top_aes_rating'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rating Dev:</td>
+                                    <td>{{ session['db2_top_aes_rd'] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>                        
+                    </div>
+                    <img src="static/imgs/{{session['db2_top_comp_img']}}" alt="" class="card-img-bottom">
+                    <div class="card-body">
+                        <p class="h5 card-text">Top complexity rating</p>
+                        <table class="card-table table">
+                            <tbody>
+                                <tr>
+                                    <td>Rating:</td>
+                                    <td>{{ session['db2_top_comp_rating'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rating Dev:</td>
+                                    <td>{{ session['db2_top_comp_rd'] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js" integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A==" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+
+{% endblock content %}

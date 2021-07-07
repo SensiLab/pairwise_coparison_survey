@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block title %}
+    SensiLab survey.
+{% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <p class="h2 text-center">Online assessment of aesthetic preferences and image complexity perception</p>
+        <div class="row mb-3">
+            <div class="col align-items-stretch">
+                <div class="rounded card px-3">
+                    <p class="my-0">Chief Investigator:</p>
+                    <p class="h4">Professor Jon McCormack</p>
+                    <p class="h6 my-0">SensiLab</p>
+                    <p class="my-3">Faculty of Information Technology<br>Monash University</p>
+                </div>
+            </div>
+            <div class="col align-items-stretch">
+                <div class="rounded card px-3">
+                    <p class="my-0">Investigator:</p>
+                    <p class="h4">Dr. Camilo Cruz Gambardella</p>
+                    <p class="h6 my-0">SensiLab</p>
+                    <p class="my-0">Faculty of Information Technology<br>Monash University</p>
+                    <a class="my-1" href="mailto:camilo.cruzgambardella@monash.edu">camilo.cruzgambardella@monash.edu</a>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-0 px-0 text-justify">
+            <p class="text-justify">This is an invitation to participate in this study. Please read this Explanatory Statement 
+            carefully and in full before deciding whether or not to take part in this research. If you would 
+            require further information regarding any aspect of this project, you are encouraged to contact 
+            the researchers via the email address provided above.</p>
+            <p class="h3">What does the research involve?</p>
+            <p>We are conducting an online survey that involves answering simple questions about computer-generated abstract images.<br>
+                The survey is open ended, and you can answer as many questions as you like.
+            </p>
+            <p class="h3">Why were you selected to participate?</p>
+            <p>This survey is open to all members of the public.</p>
+            <p class="h3">Consenting to participate and withdrawing from the research.</p>
+            <p>Before you begin the survey you will be asked to read a consent form on your web browser,
+                followed by three questions regarding age, gender and your level of creative proficiency.
+                You do not need to answer these questions nor accept the conditions of the consent form if you do not wish to continue,
+                and even if you accept, you can leave the experiment at any time.
+                No explanations or justifications are required.<br>
+                The data collected in this experiment will be anonymous, which means that once you have submitted your answers,
+                they will not be associated with you in any way, and therefore cannot be deleted upon request.</p>
+                
+            <p class="h3">Possible benefits and risks to participants.</p>
+            <p>Your participation will help us understand how people appreciate complex and interesting images.</p>
+            <p class="h3">Confidentiality.</p>
+            <p>All the information collected in this survey will be anonymised.
+                Additionally, no IP address or any other digital signature that can associate you with your participation will be collected nor stored.</p>
+                
+            <p class="h3">Storage of Data.</p>
+            <p>All the data collected during this study will be stored in a server located at Monash University.
+                Anonymous, un-aggregated data will be published online accompanying academic publications.</p>
+            <p class="h3">Results.</p>
+            <p>When results obtained through this experiment are used in a publication,
+                the details of the publication will be listed on the SensiLab website, which can be accessed at any time.</p>
+            <p class="h3">Complaints.</p>
+            <p>Should you have any concerns or complaints regarding the way this project is conducted,
+                you are welcome to contact the Executive Officer, Monash University Human Research Ethics (MUHREC).</p>
+
+        </div>
+        <div class="row mb-3 justify-content-center">
+            <div class="rounded card px-3">
+                <p class="h4">Executive Officer</p>
+                <p class="h6 my-0">Monash University Human Research Ethics Committee (MUHREC)</p>
+                <p class="my-0">Room 111, Building 3e<br>Research Office<br>Monash University VIC 3800</p>
+                <p>Tel: +61 3 9905 2052, Email:<a class="my-1" href="mailto:muhrec@monash.edu"> muhrec@monash.edu</a>, Fax: +61 3 9905 3831</p>
+            </div>
+        </div>
+        <p>Thank You,<br>
+            Professor JonMcCormack and Dr Camilo Cruz Gambardella</p>
+
+        <div class="row justify-content-end">
+            <input type="submit" class="btn btn-sm btn-danger mx-5"  id='home-btn' method="get" value="Back to Home"/>
+        </div>
+    </div>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="{{ url_for('survey/static', filename='js/e_statement.js') }}"></script>
+{% endblock content %}

@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    SensiLab Survey
+{% endblock title %}
+
+{% block content %}
+<meta id="counter" data-counter="{{ counter }}">
+<div class="container">    
+    <div class='jumbotron rounded-top px-3 py-3'>
+        <div class="row ">
+            <div class="rounded jumbotron border mx-3 my-3 px-0 py-0 bg-secondary text-white" style="width:100%">
+                <div class="card-body text-center">
+                    {% if question == 0 %}
+                        <p class="h3 font-weight-light my-0">Which one of these images do you <b>like the most</b>?</p>
+                    {% else %}
+                        <p class="h3 font-weight-light my-0">Which one of these images is <b>more complex</b>?</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div> 
+        <form class="px-0 py-0 mx-0 my-0" action="/next" method="post" id="vote">
+            <div class='row mb-2'>
+                <div class='col overlay-container' id='img-col-a'>
+                    <input type="radio" class="input-hidden" id="a" name="selection" value=0 required="true">
+                    <label for="a">
+                        <img id="img-a" class="rounded img-fluid" src="static/{{rand_imgs[0]}}">
+                        <div class="overlay">
+                            {% if question == 0 %}
+                            <div class="overlay-text">I <b>like</b> this one better</div>
+                            {% else %}
+                            <div class="overlay-text">This one is more <b>complex</b></div>
+                            {% endif %}
+                            
+                        </div>
+                    </label>
+                </div>
+                <div class='col overlay-container' id='img-col-b'>
+                    <input type="radio" class="input-hidden" id="b" name="selection" value=1 required="true">
+                    <label for="b">
+                        <img id="img-b" class="rounded img-fluid" src="static/{{rand_imgs[1]}}">
+                        <div class="overlay">
+                            {% if question == 0 %}
+                            <div class="overlay-text">I <b>like</b> this one better</div>
+                            {% else %}
+                            <div class="overlay-text">This one is more <b>complex</b></div>
+                            {% endif %}
+                        </div>
+                    </label>
+                </div> 
+            </div>
+                   
+            <div class="row align-items-center justify-content-center mb-3">
+                <!-- <div class="col d-flex align-items-center justify-content-center"> -->
+                    <input type="radio" class="input-hidden" id="c" name="selection" value=-1 required="true">
+                    <label for="c" class="px-0 py-0 mx-0 my-0">
+                        <div id="btn-c" class="rounded jumbotron border mx-0 my-0 px-0 py-0 bg-secondary text-white text-center align-items-center" style="width:240px; height:60px">
+                            <!-- <div class="card-body text-center"> -->
+                                <div class="h5 mt-3">Can't decide</div>
+                            <!-- </div> -->
+                        </div>
+                    </label>                   
+                <!-- </div> -->
+            </div>
+            <div class="row align-items-center justify-content-center mb-1">
+                <input type="submit" class="btn btn-lg btn-primary mx-5"  value="Next" id="castVote" disabled='disabled' >
+            </div>
+        </form>
+        <div class="row align-items-center justify-content-end">                   
+            <input type="submit" class="btn btn-sm btn-danger mx-5"  id='exit-btn' method="get" value="Exit"/>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="msgModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title justify-content-center text-center">Thank you for participating in our experiment!</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p class='h5'>So far you have done <b>{{ counter }}</b> comparisons!</p>
+                    <p>If you want to keep going just click continue. This would be very helpful for our research. Otherwise, click on the exit survey button.</p>
+                    <p>This message will not be displayed again.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="close-modal">Continue</button>
+                    <button type="button" class="btn btn-danger" id="exit-btn2">Exit Survey</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+</div>
+
+<!-- scripts -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/survey.js') }}"></script>
+
+
+{% endblock content %}

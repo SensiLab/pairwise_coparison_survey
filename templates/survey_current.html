@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+{% block title %}
+    SensiLab Survey
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron rounded-top px-3 py-3 my-2 text-center">
+        <p class="h3">SensiLab</p>
+        <p>Online assessment of aesthetic preferences and image complexity perception</p>
+    </div>
+
+    
+    <div class='jumbotron rounded-top px-3 py-3'>
+        <form action="/next" method="post" id="vote">
+            <div class='row mb-2'>
+                <div class='col'>
+                    <label for="a">
+                        <img id="img-a" class="rounded img-fluid" src="static/{{rand_imgs[0]}}">
+                    </label>
+                </div>
+                <div class='col'>
+                    <label for="b">
+                        <img id="img-b" class="rounded img-fluid" src="static/{{rand_imgs[1]}}">
+                    </label>
+                </div> 
+            </div>
+            <div class="row ">
+                <div class="rounded jumbotron border mx-3 my-3 px-0 py-0 bg-secondary text-white" style="width:100%">
+                    <div class="card-body text-center">
+                        {% if question == 0 %}
+                            <p class="h3 font-weight-light my-0">Which one of these images do you <b>like the most</b>?</p>
+                        {% else %}
+                            <p class="h3 font-weight-light my-0">Which one of these images is <b>more complex</b>?</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>        
+            <div class="row align-items-center mb-3">
+                <div class='col d-flex align-items-center justify-content-center'>
+                    <input type="radio" id="a" name="selection" value=0 required="true">                    
+                </div>
+                <div class="col d-flex align-items-center justify-content-center">
+                    <input type="radio" id="c" name="selection" value=-1 required="true">                   
+                </div>
+                <div class='col d-flex align-items-center justify-content-center'>
+                    <input type="radio" id="b" name="selection" value=1 required="true">                   
+                </div>
+            </div>
+            <div class="row align-items-center text-center mb-3">
+                <div class='col d-flex align-items-center justify-content-center'>
+                    {% if question == 0 %}                    
+                        <label class="my-0 mx-2" for="a">I like the image on the <b>left</b> better</label>
+                    {% else %}
+                        <label class="my-0 mx-2" for="a">The image on the <b>left</b> is more complex</label>
+                    {% endif %}
+                </div>
+                <div class="col d-flex align-items-center justify-content-center">
+                    <label class="mb-0 mx-2" for="c">Can't decide</label>
+                </div>
+                <div class='col d-flex align-items-center justify-content-center'>
+                    {% if question == 0 %}                    
+                        <label class="my-0 mx-2" for="a">I like the image on the <b>right</b> better</label>
+                    {% else %}
+                        <label class="my-0 mx-2" for="a">The image on the <b>right</b> is more complex</label>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row align-items-center justify-content-center mb-3">
+                <input type="submit" class="btn btn-lg btn-primary mx-5"  value="Next" id="castVote" disabled='disabled' >
+            </div>
+        </form>
+        <div class="row align-items-center justify-content-end">                   
+            <input type="submit" class="btn btn-sm btn-danger mx-5"  id='exit-btn' method="get" value="Exit"/>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-fade" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yo have done X comparisons</h5>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/survey.js') }}"></script>
+{% endblock content %}

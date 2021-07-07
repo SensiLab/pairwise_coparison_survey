@@ -1,0 +1,29 @@
+<html>
+    <head>
+        {% block head %}
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+            <!-- {% block styles %} -->
+                <!-- Load custom CSS -->
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+            <!-- {% endblock styles %} -->
+           
+            <!-- {% block scripts %}
+            {% endblock scripts %} -->
+            <!-- title block -->
+            <title>{% block title %}{% endblock title %}</title>
+        {% endblock head %}
+    </head>
+    <body>
+        <div class="container">
+            <div class="jumbotron px-3 py-3 my-2 text-center">
+                <p class="h3">SensiLab</p>
+                <p>Online assessment of aesthetic preferences and image complexity perception</p>
+            </div>
+        </div>
+        {% block content %}
+        {% endblock content %}
+    </body>
+</html>
