@@ -52,17 +52,14 @@ app.secret_key = "dkjfbwi7KJG*Ykhfhj*9%4))6$kjhGLOP"
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///voters.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///voters.db'
 app.config['SQLALCHEMY_BINDS'] = {
+    'matches':   'sqlite:///matches.db',
     'img_set1': 'sqlite:///img_set1.db',
-    'img_set2': 'sqlite:///img_set2.db',
-    'matches':   'sqlite:///matches.db'
+    'img_set2': 'sqlite:///img_set2.db'
 }
 
 # db = SQLAlchemy(app)
 db.init_app(app)
 auth = HTTPBasicAuth()
-
-
-
 
 # =============================================================
 # =============================================================
@@ -279,198 +276,6 @@ def verify(username,password):
         return True
     else:
         return False
-
-# @app.route("/stats")
-# @auth.login_required
-# def dashboard():
-#     # count total number of responses
-#     total_responses = Match.query.count()
-#     session['total_responses'] = total_responses
-
-#     # number of respondents
-#     total_voters = Voter.query.count()
-#     session['total_voters'] = total_voters
-
-#     # average time per response
-#     total_time = 0
-#     for i in Match.query.all():
-#         total_time+=i.duration
-    
-#     avg_time = round((total_time/total_responses)/1000,2)
-#     session['avg_response_time'] = avg_time
-
-#     # location of voters
-#     voter_loc = {}
-#     for i in Voter.query.all():
-#         if i.location not in voter_loc.keys():
-#             voter_loc[i.location] = 1
-#         else:
-#             voter_loc[i.location]+=1
-
-#     voter_loc_sorted = {k: v for k, v in sorted(voter_loc.items(), key=lambda item: item[1], reverse=True)}
-#     top_voter_loc = max(voter_loc, key=lambda key: voter_loc[key])
-#     # {k: v for k, v in sorted(x.items(), key=lambda item: item[1])}
-#     session['top_voter_loc'] = list(voter_loc_sorted.keys())
-#     session['top_voter_num'] = list(voter_loc_sorted.values())
-
-#     print(bcolors.GREEN)
-#     print(voter_loc_sorted)
-#     print(bcolors.RESET)
-
-
-#     ages = [0] * 7
-#     genders = [0] * 6
-#     experience = [0] * 5
-#     for i in Voter.query.all():
-#         ages[i.age] += 1
-#         genders[i.gender] += 1
-#         experience[i.creativity] += 1
-
-
-    
-#     session['ages'] = ages
-#     session['genders'] = genders
-#     session['experience'] = experience
-    
-#     rd_threshold = 200
-#     # DATASET 0
-#     db0_matched_aesthetics = 0
-#     db0_matched_complexity = 0
-#     db0_belowRDThreshold_aesthetics = 0
-#     db0_belowRDThreshold_complexity = 0
-#     db0_size = OrgsDb.query.count()
-
-#     for i in OrgsDb.query.all():
-#         if len(i.matches_aesthetics[1:]) > 0:
-#             db0_matched_aesthetics+=1
-#         if len(i.matches_complexity[1:]) > 0:
-#             db0_matched_complexity+=1
-#         if i.rating_dev_aesthetics <= rd_threshold:
-#             db0_belowRDThreshold_aesthetics+=1
-#         if i.rating_dev_complexity <= rd_threshold:
-#             db0_belowRDThreshold_complexity+=1
-        
-    
-#     session['db0_matched_aesthetics'] = round(db0_matched_aesthetics/db0_size,4)
-#     session['db0_matched_complexity'] = round(db0_matched_complexity/db0_size,4)
-#     session['db0_belowRDThreshold_aesthetics'] = round((db0_belowRDThreshold_aesthetics/db0_size)*100,2)
-#     session['db0_belowRDThreshold_complexity'] = round((db0_belowRDThreshold_complexity/db0_size)*100,2)
-
-
-
-#     # AESTHETICS
-#     db0_top_aes = OrgsDb.query.order_by(OrgsDb.rating_aesthetics.desc(), OrgsDb.rating_dev_aesthetics.asc())[0]
-#     db0_top_aes_img_0 = db0_top_aes.file_name
-#     session['db0_top_aes_img'] = db0_top_aes_img_0
-#     db0_top_aes_rating = db0_top_aes.rating_aesthetics
-#     session['db0_top_aes_rating'] = round(db0_top_aes_rating,2)
-#     db0_top_aes_rd = db0_top_aes.rating_dev_aesthetics
-#     session['db0_top_aes_rd'] = round(db0_top_aes_rd,2)
-    
-    
-#     # COMPLEXITY
-#     db0_top_complexity = OrgsDb.query.order_by(OrgsDb.rating_complexity.desc(), OrgsDb.rating_dev_complexity.asc())[0]
-#     db0_top_complexity_img_0 = db0_top_complexity.file_name
-#     session['db0_top_comp_img'] = db0_top_complexity_img_0
-#     db0_top_complexity_rating = db0_top_complexity.rating_complexity
-#     session['db0_top_comp_rating'] = round(db0_top_complexity_rating,2)
-#     db0_top_complexity_rd = db0_top_complexity.rating_dev_complexity
-#     session['db0_top_comp_rd'] = round(db0_top_complexity_rd,2)
-
-#     # DATASET1
-#     db1_matched_aesthetics = 0
-#     db1_matched_complexity = 0
-#     db1_belowRDThreshold_aesthetics = 0
-#     db1_belowRDThreshold_complexity = 0
-#     db1_size = LineDrawings.query.count()
-#     for i in LineDrawings.query.all():
-#         if len(i.matches_aesthetics[1:]) > 0:
-#             db1_matched_aesthetics+=1
-#         if len(i.matches_complexity[1:]) > 0:
-#             db1_matched_complexity+=1
-#         if i.rating_dev_aesthetics <= rd_threshold:
-#             db1_belowRDThreshold_aesthetics+=1
-#         if i.rating_dev_complexity <= rd_threshold:
-#             db1_belowRDThreshold_complexity+=1
-
-#     session['db1_matched_aesthetics'] = round(db1_matched_aesthetics/db1_size,4)
-#     session['db1_matched_complexity'] = round(db1_matched_complexity/db1_size,4)
-#     session['db1_belowRDThreshold_aesthetics'] = round((db1_belowRDThreshold_aesthetics/db1_size)*100,2)
-#     session['db1_belowRDThreshold_complexity'] = round((db1_belowRDThreshold_complexity/db1_size)*100,2)
-
-#     # AESTHETICS
-#     db1_top_aes = LineDrawings.query.order_by(LineDrawings.rating_aesthetics.desc(), LineDrawings.rating_dev_aesthetics.asc())[0]
-#     db1_top_aes_img_0 = db1_top_aes.file_name
-#     session['db1_top_aes_img'] = db1_top_aes_img_0
-#     db1_top_aes_rating = db1_top_aes.rating_aesthetics
-#     session['db1_top_aes_rating'] = round(db1_top_aes_rating,2)
-#     db1_top_aes_rd = db1_top_aes.rating_dev_aesthetics
-#     session['db1_top_aes_rd'] = round(db1_top_aes_rd,2)
-
-#     # COMPLEXITY
-#     db1_top_comp = LineDrawings.query.order_by(LineDrawings.rating_complexity.desc(), LineDrawings.rating_dev_complexity.asc())[0]
-#     db1_top_comp_img_0 = db1_top_comp.file_name
-#     session['db1_top_comp_img'] = db1_top_comp_img_0
-#     db1_top_comp_rating = db1_top_comp.rating_complexity
-#     session['db1_top_comp_rating'] = round(db1_top_comp_rating,2)
-#     db1_top_comp_rd = db1_top_comp.rating_dev_complexity
-#     session['db1_top_comp_rd'] = round(db1_top_comp_rd,2)
-
-#     # DATASET2
-#     db2_matched_aesthetics = 0
-#     db2_matched_complexity = 0
-#     db2_belowRDThreshold_aesthetics = 0
-#     db2_belowRDThreshold_complexity = 0
-#     db2_size = Lomas.query.count()
-#     for i in Lomas.query.all():
-#         if len(i.matches_aesthetics[1:]) > 0:
-#             db2_matched_aesthetics+=1
-#         if len(i.matches_complexity[1:]) > 0:
-#             db2_matched_complexity+=1
-#         if i.rating_dev_aesthetics <= rd_threshold:
-#             db2_belowRDThreshold_aesthetics+=1
-#         if i.rating_dev_complexity <= rd_threshold:
-#             db2_belowRDThreshold_complexity+=1
-
-#     session['db2_matched_aesthetics'] = round(db2_matched_aesthetics/db2_size,4)
-#     session['db2_matched_complexity'] = round(db2_matched_complexity/db2_size,4)
-#     session['db2_belowRDThreshold_aesthetics'] = round((db2_belowRDThreshold_aesthetics/db2_size)*100,2)
-#     session['db2_belowRDThreshold_complexity'] = round((db2_belowRDThreshold_complexity/db2_size)*100,2)
-
-#     # AESTHETICS
-#     db2_top_aes = Lomas.query.order_by(Lomas.rating_aesthetics.desc(), Lomas.rating_dev_aesthetics.asc())[0]
-#     db2_top_aes_img_0 = db2_top_aes.file_name
-#     session['db2_top_aes_img'] = db2_top_aes_img_0
-#     db2_top_aes_rating = db2_top_aes.rating_aesthetics
-#     session['db2_top_aes_rating'] = round(db2_top_aes_rating,2)
-#     db2_top_aes_rd = db2_top_aes.rating_dev_aesthetics
-#     session['db2_top_aes_rd'] = round(db2_top_aes_rd,2)
-
-#     # COMPLEXITY
-#     db2_top_comp = Lomas.query.order_by(Lomas.rating_complexity.desc(), Lomas.rating_dev_complexity.asc())[0]
-#     db2_top_comp_img_0 = db2_top_comp.file_name
-#     session['db2_top_comp_img'] = db2_top_comp_img_0
-#     db2_top_comp_rating = db2_top_comp.rating_complexity
-#     session['db2_top_comp_rating'] = round(db2_top_comp_rating,2)
-#     db2_top_comp_rd = db2_top_comp.rating_dev_complexity
-#     session['db2_top_comp_rd'] = round(db2_top_comp_rd,2)
-
-#     # count responses per dataset
-#     ds0 = 0
-#     ds1 = 0
-#     ds2 = 0
-
-#     for i in Match.query.all():
-#         if i.selected_db == 0:
-#             ds0+=1
-#         elif i.selected_db == 1:
-#             ds1+=1
-#         else:
-#             ds2+=1
-    
-#     session['responses_per_dataset'] = [ds0, ds1, ds2]
-
-#     return render_template('stats.html')
 
 if __name__ == '__main__':
     # app.run(debug=False,host="0.0.0.0")
