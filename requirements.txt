@@ -12,7 +12,6 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1
 numpy==1.20.2
-pkg-resources==0.0.0
 requests==2.25.1
 SQLAlchemy==1.4.9
 urllib3==1.26.4

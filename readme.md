@@ -67,7 +67,7 @@ We introduced two small modifications that respond to the nature of the material
 ## Installation (as a local server for testing)
 
 - Clone the repository to your local drive
-- Create a virtual environment and install dependencies using the requirements.txt file
+- Create a virtual environment and install dependencies using the provided requirements.txt file
 - Copy your images to /static/img_set1
 - Create databases using db_creation.py script:
   - If you are using one image set, comment out line 57 in app.py and lines 21 to 26 (both included) in db_creation.py
