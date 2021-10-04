@@ -137,5 +137,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# Other MAC stuff
+# Other stuff
 .DS_Store
+FlowChart.png
