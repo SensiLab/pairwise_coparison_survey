@@ -140,6 +140,7 @@ def survey():
         #databases using rating distributions
         rds = []        #a list to hold the appropriate rating_dev scores
         question = random.randint(0,1)
+        # question = 0
         if question == 0:
             session['q'] = 'rating_aesthetics'
             for img in selected_db.query.all():

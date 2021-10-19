@@ -76,6 +76,7 @@ We introduced two small modifications that respond to the nature of the material
   - To close the app, use ctrl+c on your terminal (this will kill the Flask server)
 
 ## Usage
+- To bias the selection of questions, comment out line 142 in app.py, uncomment line 143 and set the value of question to 0 for aesthetics and 1 for complexity.
 
 ## Credits
 
